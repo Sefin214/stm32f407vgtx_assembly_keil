@@ -78,24 +78,20 @@ This exercise provides practice with **borrow handling and multi-word arithmetic
 
 ---
 
-## 📝 Upcoming Exercises
+## 3. 32-bit Signed Addition and Subtraction with Overflow Detection
+
+This ARM assembly program performs **32-bit signed addition and subtraction** and checks for arithmetic overflow.
+
+* `ADDS` performs the addition and updates the condition flags.
+* `BVS` checks the **V (Overflow) flag**. If `V = 1`, signed overflow has occurred.
+* `SUBS` performs the subtraction and **recalculates the V flag**, so the overflow flag does not need to be manually reset.
+* If addition overflows, `R2` is set to `1`.
+* If subtraction overflows, `R3` is set to `1`.
+* The program then enters an infinite loop.
+
+The **V flag is specifically used for signed overflow**, while the carry flag is used for unsigned arithmetic.
 
 Additional Assembly Language practice programs will be added to this repository as I continue learning.
-
-Planned topics may include:
-
-- [ ] 64-bit addition using 32-bit registers
-- [ ] 64-bit subtraction using 32-bit registers
-- [ ] Multiplication
-- [ ] Division
-- [ ] Logical operations
-- [ ] Bit manipulation
-- [ ] Shift and rotate operations
-- [ ] Comparison operations
-- [ ] Memory access
-- [ ] Looping and branching
-- [ ] Array operations
-- [ ] Other Assembly Language practice problems
 
 ---
 
@@ -112,8 +108,8 @@ Keil-Assembly-Practice/
 ├── 64bit_Subtraction/
 │   └── subtraction.s
 │
-├── Multiplication/
-│   └── multiplication.s
+├── SIGNEDOPERATION/
+│   └── A3.s
 │
 ├── Division/
 │   └── division.s
