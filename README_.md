@@ -1,5 +1,11 @@
 # Keil Assembly Language Practice
 
+Controller used STM32f407VGTx
+NOTE* Environment setup files are included in the folder ENVIRONMENT_SETUP_FILES/ which contains:
+1. STM32f4xx_DFP.3.1.1
+2. linker.sct
+3. startup_stm32f407.s 
+
 A collection of practice programs and examples developed while learning **Assembly Language programming using Keil**.
 
 This repository focuses on understanding low-level programming concepts such as register operations, arithmetic instructions, multi-word arithmetic, memory manipulation, and processor-level programming techniques.
@@ -94,6 +100,69 @@ The **V flag is specifically used for signed overflow**, while the carry flag is
 Additional Assembly Language practice programs will be added to this repository as I continue learning.
 
 ---
+## 4. 32-bit Unsigned Addition and Subtraction Using Subroutines
+
+This ARM assembly program performs **32-bit unsigned addition and subtraction** using two separate subroutines.
+
+* The operands are initially loaded into **R0 and R1**.
+* `BL` is used to call the separate addition and subtraction subroutines.
+* `ADDS` performs the unsigned addition and updates the condition flags.
+* `BCS` checks the **C (Carry) flag**. If `C = 1`, an unsigned carry has occurred.
+* `SUBS` performs the unsigned subtraction and updates the condition flags.
+* `BCC` checks for an **unsigned borrow**. For subtraction, `C = 0` indicates that a borrow has occurred.
+* The addition and subtraction results are stored in **general-purpose registers**.
+
+The **C flag is used for unsigned arithmetic**, where carry is checked during addition and borrow is detected during subtraction.
+
+---
+
+## 5. 32-bit Signed Addition and Subtraction Using Subroutines
+
+This ARM assembly program performs **32-bit signed addition and subtraction** using two separate subroutines.
+
+* The operands are initially loaded into **R0 and R1**.
+* `BL` is used to call the separate addition and subtraction subroutines.
+* `ADDS` performs the signed addition and updates the condition flags.
+* `BVS` checks the **V (Overflow) flag**. If `V = 1`, signed overflow has occurred.
+* `SUBS` performs the signed subtraction and recalculates the **V flag**.
+* `BVS` is again used to detect signed overflow during subtraction.
+* The addition and subtraction results are stored in **general-purpose registers**.
+
+The **V flag is specifically used for signed overflow**, while the C flag is used for unsigned carry and borrow detection.
+
+---
+
+## 6. Push and Pop Registers and PSR Using MSP and PSP
+
+This ARM assembly program demonstrates **stack operations using the Main Stack Pointer (MSP) and Process Stack Pointer (PSP)**.
+
+* The stack pointer is initialized before performing stack operations.
+* Values are loaded into registers **R0–R5 and R14**.
+* The **PSR** is read using `MRS` and stored in a general-purpose register before pushing it onto the stack.
+* `PUSH` stores the register contents onto the stack.
+* `POP` retrieves the saved values from the stack into **R7–R12 and R14**.
+* The saved PSR value can be restored using `MSR`.
+* Both **MSP and PSP** are demonstrated by setting up and using the respective stack pointers.
+
+`MRS` is used to transfer information **from a special register such as PSR to a general-purpose register**, while `MSR` transfers a value **from a general-purpose register back to a special register**.
+
+This program demonstrates how ARM uses the stack to **save and restore register and processor status information**.
+
+---
+
+## 7. Adding 10 Bytes with Carry Propagation
+
+This ARM assembly program adds **10 bytes of data stored in SRAM starting from address `0x20000100`** and stores the final result at **`0x20000600`**, while taking carry propagation into account.
+
+* The starting SRAM address is loaded into a register and used to access the 10 bytes sequentially.
+* Each byte is loaded from memory and added to the accumulated result.
+* Carry propagation is taken into account while performing the multi-byte addition.
+* The addition instructions update the **C (Carry) flag**.
+* The final accumulated result is stored at memory location **`0x20000600`**.
+* The program demonstrates memory access, byte-wise arithmetic, and carry handling in ARM assembly.
+
+The important concept in this program is **carry propagation**, which ensures that a carry generated while adding lower-order data is correctly included in the higher-order result.
+
 
 ## 📂 Repository Structure
 
@@ -102,17 +171,23 @@ The repository can be organized as follows:
 ```text
 Keil-Assembly-Practice/
 │
-├── 64bit_Addition/
+├── A1_64bit_Addition/
 │   └── addition.s
 │
-├── 64bit_Subtraction/
+├── A2_64bit_Subtraction/
 │   └── subtraction.s
 │
-├── SIGNEDOPERATION/
+├── A3_SIGNED_OPERATION_OVERFLOW/
 │   └── A3.s
 │
-├── Division/
-│   └── division.s
+├── A4_UNSIGNED_OPERATION_SUBROUTINE/
+│   └── A4.s
+|
+├── A5_SIGNED_OPERATION_SUBROUTINE/
+│   └── A5.s
+│
+├── A6_PUSH_POP/
+│   └── A6.s
 │
 └── README.md
 ```
